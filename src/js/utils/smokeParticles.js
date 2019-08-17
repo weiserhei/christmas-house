@@ -14,7 +14,7 @@ export default class Particles {
                 value: loader.load( cloud )
             },
             blending: NormalBlending,
-            maxParticleCount: 2500,
+            maxParticleCount: 3000,
             // fog fix: https://github.com/squarefeet/ShaderParticleEngine/pull/132/files
             fog: true
         });
