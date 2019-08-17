@@ -17,8 +17,8 @@ import {
     ShadowMaterial
 } from 'three';
 import TWEEN from '@tweenjs/tween.js';
-
 import { CSG } from '@hi-level/three-csg';
+
 import skyPanoImg from "../../img/sky-dome-panorma.jpg";
 // import soundSteam from "../../media/steam.ogg";
 
@@ -35,7 +35,9 @@ function tweenY ( object, rotation ) {
 }
 
 export default class House {
-    constructor(scene, textureLoader, interactionObjects, particles) {
+    constructor(scene, textureLoader, particles) {
+
+        const interactionObjects = [];
 
         const house = new Object3D();
         house.position.set(0,-0.02,0);
