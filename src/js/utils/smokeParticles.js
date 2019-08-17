@@ -26,19 +26,17 @@ export default class Particles {
                 spread: new Vector3( 0.1, 0.05, 0.1 ),
             },
             size: {
-                value: [ 0.5, 1 ],
+                value: [ 0.5, 1, 5 ],
                 spread: [ 0, 0.1, 0.2 ]
             },
             acceleration: {
                 value: new Vector3( 0, 0.002, 0 ),
             },
-            
             rotation: {
                 axis: new Vector3( 0, -1, 0 ),
                 spread: new Vector3( 0, 0, 0 ),
                 angle: 720 * Math.PI / 180,
             },
-            
             velocity: {
                 value: new Vector3( 0.03, 0.06, 0.03 ),
                 spread: new Vector3( 0.025, 0.04, 0.025 )
@@ -65,11 +63,13 @@ export default class Particles {
         this.particleGroup = particleGroup;
 
         this.stop = function() {
+            emitter.enabled = false;
             emitter.disable();
         }
-
+        
         this.start = function() {
             // sound.play();
+            emitter.enabled = true;
             emitter.enable();
         }
 
