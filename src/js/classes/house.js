@@ -73,14 +73,14 @@ export default class House {
         var cylinder = new Mesh( geometry, basicMaterial.clone() );
         cylinder.material.color.setHex( 0xFFFFFF );
         cylinder.rotation.y = 45 * Math.PI / 180;
-        cylinder.position.set( 0, 1 + 0.35, 0 );
+        cylinder.position.set( 0, 0.8 + 0.35, 0 );
         house.add( cylinder );
         
         // CHIMNEY
         var geometry = new BoxGeometry( 0.2, 0.4, 0.2 );
         const kamin = new Mesh( geometry, cylinder.material.clone() );
         kamin.material.color.setHex( 0xdae0e6 );
-        kamin.position.set( -0.35, 1.2 , 0 );
+        kamin.position.set( -0.35, 1.05 , 0 );
         house.add( kamin );
         interactionObjects.push( kamin );
         kamin.userData.interact = function() {
@@ -108,7 +108,7 @@ export default class House {
 
         // WINDOW
         const windowgeometry = new BoxGeometry( 0.2, 0.2, 0.06 );
-        windowgeometry.applyMatrix( new Matrix4().makeTranslation( 0.25, -0.1, -0.48 ) );
+        windowgeometry.applyMatrix( new Matrix4().makeTranslation( 0.25, -0.0, -0.48 ) );
         const windo = new Mesh( windowgeometry, material.clone() );
 
         const textureCube = textureLoader.load( skyPanoImg, function(texture) {
@@ -126,13 +126,13 @@ export default class House {
         // textureCube.format = THREE.RGBAFormat;
 
         // windo.position.set( 0, 0.325, 0.05 );
-        windo.position.set( 0, 0.5, 0.02 );
+        windo.position.set( 0, 0.4, 0.02 );
         windo.updateMatrix();
         house.add( windo );
 
         // DOOR CUT GEOMETRY
         const doorGeometry = new BoxGeometry( 0.3, 0.5, 0.1 );
-        doorGeometry.applyMatrix( new Matrix4().makeTranslation( -0.15, -0.2, -0.5 ) );
+        doorGeometry.applyMatrix( new Matrix4().makeTranslation( -0.15, -0.1, -0.5 ) );
 
         var mergeGeometry = new Geometry();
         mergeGeometry.merge( windo.geometry );
@@ -140,7 +140,7 @@ export default class House {
         // mergeGeometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
 
         // HOUSE
-        const roomGeometry = new BoxGeometry( 1, 1, 1 );
+        const roomGeometry = new BoxGeometry( 1, 0.8, 1 );
         // roomGeometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
         var box = new Mesh( roomGeometry );
         // box.position.set( 0, 0.5, 0 );
@@ -171,7 +171,7 @@ export default class House {
         // var material = new THREE.MeshLambertMaterial({wireframe:true})
         // mesh.material = material;
         // mesh.material.shading = THREE.FlatShading;
-        mesh.position.set( 0, 0.5, 0 );
+        mesh.position.set( 0, 0.4, 0 );
         house.add( mesh );
 
         house.traverse( function( object) {

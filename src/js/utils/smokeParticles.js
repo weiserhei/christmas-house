@@ -22,7 +22,7 @@ export default class Particles {
         const emitter = new SPE.Emitter({
             maxAge: { value: 28 },
             position: { 
-                value: new Vector3( -0.35, 1.4, 0 ),
+                value: new Vector3( -0.35, 1.25, 0 ),
                 spread: new Vector3( 0.1, 0.05, 0.1 ),
             },
             size: {
