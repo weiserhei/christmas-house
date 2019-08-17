@@ -1,7 +1,0 @@
-language : node_js
-node_js :
-    - "6.9.5"
-before_script :
-    - ( node --version | grep 4.1 && npm update -g npm ) || true
-    - npm --version
-    - npm install -g grunt-cli
