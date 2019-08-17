@@ -55,7 +55,7 @@ export default class Particles {
         particleGroup.addEmitter( emitter );
         // emitter.enabled = true;
         scene.add( particleGroup.mesh );
-        // particleGroupCrash.tick( 28 );
+        // particleGroup.tick( 28 );
 
         // smokeEmitter.disable();
         // particleGroup.mesh.frustumCulled = false;
