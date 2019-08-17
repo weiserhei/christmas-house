@@ -14,7 +14,10 @@ module.exports = {
         // }),
         new HtmlWebpackPlugin({
             title: 'Christmas 2015',
-            meta: {"viewport": 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'},
+            meta: {
+                "viewport": 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0',
+                "property": { "property":"og:image", "content":"img/ogimage.jpg" }
+            },
             // favicon: "src/images/favicon.ico"
             // template: 'src/test.html'
         })
