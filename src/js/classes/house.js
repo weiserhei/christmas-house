@@ -17,7 +17,7 @@ import {
     ShadowMaterial,
 } from 'three';
 
-import { CSG } from '@hi-level/three-csg';
+import { CSG } from 'three-csg-ts';
 import tweenY from "../utils/tweenY";
 
 import skyPanoImg from "../../img/sky-dome-panorma.jpg";
@@ -97,7 +97,7 @@ export default class House {
 
         // WINDOW
         const windowgeometry = new BoxGeometry( 0.2, 0.2, 0.06 );
-        windowgeometry.applyMatrix( new Matrix4().makeTranslation( 0.25, -0.0, -0.48 ) );
+        windowgeometry.applyMatrix4( new Matrix4().makeTranslation( 0.25, -0.0, -0.48 ) );
         const window = new Mesh( windowgeometry, material.clone() );
 
         const textureCube = textureLoader.load( skyPanoImg, function(texture) {
@@ -121,16 +121,16 @@ export default class House {
 
         // DOOR CUT GEOMETRY
         const doorGeometry = new BoxGeometry( 0.3, 0.5, 0.1 );
-        doorGeometry.applyMatrix( new Matrix4().makeTranslation( -0.15, -0.1, -0.5 ) );
+        doorGeometry.applyMatrix4( new Matrix4().makeTranslation( -0.15, -0.1, -0.5 ) );
 
         var mergeGeometry = new Geometry();
         mergeGeometry.merge( window.geometry );
         mergeGeometry.merge( doorGeometry );
-        // mergeGeometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
+        // mergeGeometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
 
         // HOUSE
         const roomGeometry = new BoxGeometry( 1, 0.8, 1 );
-        // roomGeometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
+        // roomGeometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
         var box = new Mesh( roomGeometry );
         // box.position.set( 0, 0.5, 0 );
         box.updateMatrix();
@@ -171,7 +171,7 @@ export default class House {
         // DOOR
         doorGeometry.center();
         // SHIFT GEOMETRY SO THE CENTROID ( ROTATION AXIS ) IS ON THE EDGE
-        doorGeometry.applyMatrix( new Matrix4().makeTranslation( 0.2, 0, 0 ) );
+        doorGeometry.applyMatrix4( new Matrix4().makeTranslation( 0.2, 0, 0 ) );
 
         const woodMaterial = material.clone();
         woodMaterial.color.setHex( 0x876a14 );
@@ -189,8 +189,8 @@ export default class House {
 
         // var geometry = new THREE.SphereBufferGeometry( 0.02, 16, 16 );
         const knobGeometry = new CylinderGeometry( 0.02, 0.02, 0.01, 16 );
-        knobGeometry.applyMatrix( new Matrix4().makeRotationX( Math.PI / 2 ) );
-        knobGeometry.applyMatrix( new Matrix4().makeTranslation( 0.3, 0, -0.05 ) );
+        knobGeometry.applyMatrix4( new Matrix4().makeRotationX( Math.PI / 2 ) );
+        knobGeometry.applyMatrix4( new Matrix4().makeTranslation( 0.3, 0, -0.05 ) );
         doorGeometry.merge( knobGeometry, knobGeometry.matrix, 6 );
 
         const door = new Mesh( doorGeometry, doorMaterial );
@@ -213,15 +213,15 @@ export default class House {
 
         // POST
         const postBoxCapGeometry = new CylinderGeometry( 0.04, 0.04, 0.22, 32, 1, false, 0, Math.PI );
-        postBoxCapGeometry.applyMatrix( new Matrix4().makeRotationZ( 90 * Math.PI / 180 ) );
-        postBoxCapGeometry.applyMatrix( new Matrix4().makeTranslation( 0, 0.2, 0 ) );
+        postBoxCapGeometry.applyMatrix4( new Matrix4().makeRotationZ( 90 * Math.PI / 180 ) );
+        postBoxCapGeometry.applyMatrix4( new Matrix4().makeTranslation( 0, 0.2, 0 ) );
 
         const postBoxGeometry = new BoxGeometry( 0.22, 0.04, 0.08 );
-        postBoxGeometry.applyMatrix( new Matrix4().makeTranslation( 0, 0.18, 0 ) );
+        postBoxGeometry.applyMatrix4( new Matrix4().makeTranslation( 0, 0.18, 0 ) );
         postBoxGeometry.merge( postBoxCapGeometry );
 
         const postBoxPoleGeometry = new CylinderGeometry( 0.02, 0.02, 0.16 );
-        postBoxPoleGeometry.applyMatrix( new Matrix4().makeTranslation( 0, 0.08, 0 ) );
+        postBoxPoleGeometry.applyMatrix4( new Matrix4().makeTranslation( 0, 0.08, 0 ) );
 
         const postGeometry = new Geometry();
         postGeometry.merge( postBoxPoleGeometry, postBoxPoleGeometry.matrix, 0 );
@@ -264,7 +264,7 @@ export default class House {
         for(let i = 0; i < total; i++ ) {
             const ht = total / 2;
             const clone = stripGeometry.clone();
-            // clone.applyMatrix( new Matrix4().makeTranslation( i * 1.7 - ht - 1, 0.01, 0 ) );
+            // clone.applyMatrix4( new Matrix4().makeTranslation( i * 1.7 - ht - 1, 0.01, 0 ) );
             const matrix = new Matrix4().makeTranslation( i * 1.7 - ht - 1, 0.01, 0 );
             roadGeometry.merge( clone, matrix, 6 );
         }

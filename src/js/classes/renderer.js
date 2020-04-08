@@ -1,4 +1,4 @@
-import { WebGLRenderer, PCFShadowMap, PCFSoftShadowMap } from 'three';
+import { WebGLRenderer, PCFShadowMap, PCFSoftShadowMap, GammaEncoding } from 'three';
 
 // Main webGL renderer class
 export default class Renderer {
@@ -9,7 +9,7 @@ export default class Renderer {
     // Create WebGL renderer and set its antialias
     this.threeRenderer = new WebGLRenderer({ antialias: true });
 
-    this.threeRenderer.gammaOutput = true;
+    this.threeRenderer.outputEncoding = GammaEncoding;
     // this.threeRenderer.gammaInput = true;
     // Set clear color to fog to enable fog or to hex color for no fog
     // this.threeRenderer.setClearColor('#555'); // scene.fog.color
