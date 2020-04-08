@@ -76,7 +76,7 @@ function init () {
 	}
 	scene.add( logo );
 		
-	new House(scene, textureLoader, particles);
+	new House(scene, textureLoader, null);
 	new InteractionController(scene, camera.threeCamera, container);
 
 	function update(delta) {

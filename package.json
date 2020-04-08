@@ -34,10 +34,10 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@hi-level/three-csg": "^1.0.6",
     "@tweenjs/tween.js": "^17.4.0",
     "shader-particle-engine": "^1.0.6",
     "stats.js": "^0.17.0",
-    "three": "^0.115.0"
+    "three": "^0.115.0",
+    "three-csg-ts": "^1.0.3"
   }
 }
