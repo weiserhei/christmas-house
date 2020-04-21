@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/weiserhei/threejs-experiments.git"
+    "url": "git+https://github.com/weiserhei/christmas-house.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/weiserhei/threejs-experiments/issues"
+    "url": "https://github.com/weiserhei/christmas-house/issues"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
