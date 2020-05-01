@@ -1,3 +1,5 @@
+![Node.js CI](https://github.com/weiserhei/christmas-house/workflows/Node.js%20CI/badge.svg)
+
 # Christmas House (2015)(updated 2019)
 My first three.js christmas experiment.
 
