@@ -38,6 +38,6 @@
     "shader-particle-engine": "git+https://github.com/blaze33/ShaderParticleEngine.git",
     "stats.js": "^0.17.0",
     "three": "^0.119",
-    "three-csg-ts": "^1.0.3"
+    "three-csg-ts": "^1.0.4"
   }
 }
