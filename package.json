@@ -28,16 +28,16 @@
     "html-webpack-plugin": "^3.2.0",
     "imports-loader": "^0.8.0",
     "style-loader": "^0.23.1",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "@tweenjs/tween.js": "^17.4.0",
-    "shader-particle-engine": "^1.0.6",
+    "shader-particle-engine": "git+https://github.com/blaze33/ShaderParticleEngine.git",
     "stats.js": "^0.17.0",
-    "three": "^0.115.0",
+    "three": "^0.119",
     "three-csg-ts": "^1.0.3"
   }
 }
