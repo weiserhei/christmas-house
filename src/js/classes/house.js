@@ -1,19 +1,15 @@
 import {
   MeshBasicMaterial,
   MeshLambertMaterial,
-  MeshPhongMaterial,
   Geometry,
   BoxGeometry,
-  BoxBufferGeometry,
   CylinderGeometry,
   CylinderBufferGeometry,
   PlaneBufferGeometry,
-  SphereBufferGeometry,
   Mesh,
   Matrix4,
   Object3D,
   EquirectangularReflectionMapping,
-  SphericalReflectionMapping,
   ShadowMaterial,
 } from "three";
 
@@ -106,7 +102,7 @@ export default class House {
     );
     const window = new Mesh(windowgeometry, material.clone());
 
-    const textureCube = textureLoader.load(skyPanoImg, function (texture) {
+    const textureCube = textureLoader.load(skyPanoImg, function () {
       window.material.needsUpdate = true;
     });
 
@@ -154,9 +150,9 @@ export default class House {
     // cut door and window
     var sub = new Mesh(mergeGeometry);
     sub.updateMatrix();
-    var subtract_bsp = CSG.fromMesh(sub);
+    var subtract_bsp2 = CSG.fromMesh(sub);
     // var result = cube_bsp.subtract( subtract_bsp );
-    const result = emptyCube.subtract(subtract_bsp);
+    const result = emptyCube.subtract(subtract_bsp2);
 
     const houseMesh = CSG.toMesh(result, box.matrix);
     houseMesh.material = material;

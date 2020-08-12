@@ -4,7 +4,6 @@ import {
   Scene,
   Clock,
   TextureLoader,
-  MeshPhongMaterial,
   SphereBufferGeometry,
   Mesh,
   Fog,

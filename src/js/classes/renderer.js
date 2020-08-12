@@ -1,9 +1,4 @@
-import {
-  WebGLRenderer,
-  PCFShadowMap,
-  PCFSoftShadowMap,
-  GammaEncoding,
-} from "three";
+import { WebGLRenderer, PCFShadowMap, GammaEncoding } from "three";
 
 // Main webGL renderer class
 export default class Renderer {

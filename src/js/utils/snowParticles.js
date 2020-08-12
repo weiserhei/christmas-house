@@ -1,4 +1,4 @@
-import { TextureLoader, NormalBlending, Vector3, Color } from "three";
+import { TextureLoader, Vector3, Color } from "three";
 import SPE from "shader-particle-engine";
 
 import snowflake from "../../img/snowflake.png";

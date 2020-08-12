@@ -3,6 +3,10 @@ module.exports = {
     env: {
       browser: true,
       es2020: true,
+      amd: true,
+    },
+    "globals": {
+        "THREE": true
     },
     parserOptions: {
       ecmaVersion: 11,
