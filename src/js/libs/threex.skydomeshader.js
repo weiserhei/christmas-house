@@ -1,3 +1,5 @@
+/* global THREE */
+
 var THREEx = THREEx || {};
 
 /**

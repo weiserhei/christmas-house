@@ -5,9 +5,6 @@ module.exports = {
       es2020: true,
       amd: true,
     },
-    "globals": {
-        "THREE": true
-    },
     parserOptions: {
       ecmaVersion: 11,
       sourceType: "module",
