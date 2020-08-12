@@ -10,10 +10,10 @@ import {
   BoxBufferGeometry,
   MeshLambertMaterial,
 } from "three";
-
 import { WEBGL } from "three/examples/jsm/WebGL.js";
 import Stats from "stats.js";
 import TWEEN from "@tweenjs/tween.js";
+import { THREEx } from "./libs/threex.skydomeshader";
 
 import Controls from "./classes/controls";
 import Renderer from "./classes/renderer";
@@ -57,7 +57,6 @@ function init() {
   const particles2 = new SnowParticles(scene);
 
   // SKYBOX
-  const THREEx = require("./libs/threex.skydomeshader");
   const skyGeo = new SphereBufferGeometry(400, 32, 15);
   const skyMat = THREEx.skyDomeShaderMaterial();
 
