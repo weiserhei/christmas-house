@@ -1,5 +1,3 @@
-import TWEEN from "@tweenjs/tween.js";
-import { Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Controls based on orbit controls
