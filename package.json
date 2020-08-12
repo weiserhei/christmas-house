@@ -6,6 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "npx prettier --write ./src/",
+    "eslint": "npx eslint ./src/",
     "build": "webpack --progress --color --config webpack.prod.js",
     "dev": "webpack-dev-server --open --public --config webpack.dev.js"
   },
@@ -22,21 +24,24 @@
   "devDependencies": {
     "@tweenjs/tween.js": "^18.6.0",
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.1.1",
-    "css-loader": "^2.1.1",
-    "exports-loader": "^0.7.0",
-    "file-loader": "^4.3.0",
-    "html-webpack-plugin": "^3.2.0",
-    "imports-loader": "^0.8.0",
     "shader-particle-engine": "github:blaze33/ShaderParticleEngine#d019c8bf3766997f39dccda943fcee9586e84d94",
     "stats.js": "^0.17.0",
-    "style-loader": "^0.23.1",
     "three": "^0.119.1",
     "three-csg-ts": "^1.0.4",
+    "copy-webpack-plugin": "^6.0.3",
+    "css-loader": "^4.2.1",
+    "exports-loader": "^1.1.0",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "imports-loader": "^1.1.0",
+    "style-loader": "^1.2.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^5.1.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5"
   },
   "dependencies": {}
 }

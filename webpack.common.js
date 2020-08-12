@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack'); //to access built-in plugins
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -36,17 +35,21 @@ module.exports = {
     // },
     module: {
         rules: [
+            // Shim THREEx.skydomeshader
             {
                 test: require.resolve("./src/js/libs/threex.skydomeshader.js"),
-                use: ['imports-loader?THREE=three', 'exports-loader?THREEx']
+                use: [
+                    'imports-loader?imports=namespace|three|THREE',
+                    'exports-loader?exports=THREEx'
+                ]
             },
+            // Shim SPE-Package
             {
-                // shim because SPE 1.0.6 is not a module
-                // delete SPEs dependency on threejs in package-lock.json 
-                // or it will fallback and doesnt work!
                 test: require.resolve("shader-particle-engine"),
-                use: ['imports-loader?THREE=three', 'exports-loader?SPE']
-
+                use: [
+                    'imports-loader?imports=namespace|three|THREE',
+                    'exports-loader?exports=default|SPE'
+                ]
             },
 		// {
 		// 	test: /\.(obj|mtl)$/,
