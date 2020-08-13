@@ -10,9 +10,9 @@ My first three.js christmas experiment.
 
 ## Demo
 
-[![demo](/ogimage.jpg)](http://weiserhei.github.io/christmas-house/dist/)
+[![demo](/ogimage.jpg)](http://weiserhei.github.io/christmas-house/)
 
-http://weiserhei.github.io/christmas-house/dist/
+http://weiserhei.github.io/christmas-house/
 
 ### Quickstart
 
