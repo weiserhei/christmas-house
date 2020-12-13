@@ -38,7 +38,7 @@
     "style-loader": "^1.3.0",
     "three": "^0.123",
     "three-csg-ts": "^2.0.0",
-    "webpack": "^4.44.2",
+    "webpack": "^5.0.0-rc.6",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^5.7.0"
