@@ -7,7 +7,7 @@ export default class InteractionController {
 
     window.addEventListener("touchstart", touchstart, true);
     window.addEventListener("mousemove", onMouseMove, false);
-    window.addEventListener("mousedown", onMouseDown, false);
+    window.addEventListener("pointerdown", onMouseDown, false);
 
     function touchstart(e) {
       if (e.touches.length > 0) {
