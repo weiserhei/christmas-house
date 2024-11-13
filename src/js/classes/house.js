@@ -1,11 +1,9 @@
 import {
   MeshBasicMaterial,
   MeshLambertMaterial,
-  Geometry,
   BoxGeometry,
   CylinderGeometry,
-  CylinderBufferGeometry,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   Mesh,
   Matrix4,
   Object3D,
@@ -13,10 +11,12 @@ import {
   ShadowMaterial,
 } from "three";
 
+import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
+
 import { CSG } from "three-csg-ts";
 import tweenY from "../utils/tweenY";
 
-import skyPanoImg from "../../img/sky-dome-panorma.jpg";
+import skyPanoImg from "../../assets/img/sky-dome-panorma.jpg";
 
 export default class House {
   constructor(scene, textureLoader, particles) {
@@ -29,26 +29,31 @@ export default class House {
     scene.add(house);
 
     // var material = new THREE.MeshBasicMaterial( { color: 0xFF1111, wireframe: false } );
-    var material = new MeshLambertMaterial({
-      color: 0xff1111,
+    const material = new MeshLambertMaterial({
+      color: 0xef3333,
       wireframe: false,
     });
     // var material = new THREE.MeshPhongMaterial( { color: 0xFF1111, wireframe: false } );
-    var basicMaterial = new MeshBasicMaterial({
-      color: 0xff1111,
+    const basicMaterial = new MeshBasicMaterial({
+      color: 0x00ffff,
       wireframe: false,
     });
 
     // FLOOR
-    const floorMaterial = new MeshBasicMaterial({ color: 0xeeeeee });
-    const floorGeometry = new PlaneBufferGeometry(10, 10, 1, 1);
+    const floorMaterial = new MeshBasicMaterial({ color: 0xf0f0f0 });
+    const floorGeometry = new PlaneGeometry(10, 10, 1, 1);
     const floor = new Mesh(floorGeometry, floorMaterial);
     // floor.position.y = -0.25;
     floor.rotation.x = -Math.PI / 2;
     floor.matrixAutoUpdate = false;
     floor.updateMatrix();
-    scene.add(floor);
     floor.receiveShadow = false;
+    // scene.add(floor);
+
+    const earth = new BoxGeometry(10, 0.3, 10);
+    const eMesh = new Mesh(earth, floorMaterial);
+    earth.applyMatrix4(new Matrix4().makeTranslation(0, -0.15, 0));
+    scene.add(eMesh);
 
     const shadowMaterial = new ShadowMaterial({ opacity: 0.1 });
     const shadowPlane = new Mesh(floorGeometry, shadowMaterial);
@@ -59,9 +64,9 @@ export default class House {
 
     // ROOF
     const size = 0.25;
-    const roofGeometry = new CylinderBufferGeometry(0, size * 3, size * 3, 4);
+    const roofGeometry = new CylinderGeometry(0, size * 3, size * 3, 4);
     const cylinder = new Mesh(roofGeometry, basicMaterial.clone());
-    cylinder.material.color.setHex(0xffffff);
+    cylinder.material.color.setHex(0xfafafa);
     cylinder.rotation.y = (45 * Math.PI) / 180;
     cylinder.position.set(0, 0.8 + 0.35, 0);
     cylinder.matrixAutoUpdate = false;
@@ -77,17 +82,18 @@ export default class House {
     house.add(chimney);
     interactionObjects.push(chimney);
     chimney.userData.interact = function () {
-      if (particles.emitter.enabled) {
-        tweenY(this, (-180 * Math.PI) / 180);
-        particles.stop();
+      //   if (particles.emitter && particles.emitter.enabled) {
+      if (this.rotation.y == 0) {
+        particles.active(false);
+        return tweenY(this, (-180 * Math.PI) / 180);
       } else {
-        tweenY(this, (0 * Math.PI) / 180);
-        particles.start();
+        particles.active(true);
+        return tweenY(this, (0 * Math.PI) / 180);
       }
     }.bind(chimney);
 
     // INNER CHIMNEY
-    const holeGeometry = new CylinderBufferGeometry(0.08, 0.08, 0.1, 8);
+    const holeGeometry = new CylinderGeometry(0.08, 0.08, 0.1, 8);
     const hole = new Mesh(holeGeometry, material.clone());
     hole.material.color.setHex(0x222222);
     hole.position.set(0, 0.151, 0);
@@ -122,24 +128,23 @@ export default class House {
     house.add(window);
 
     // DOOR CUT GEOMETRY
-    const doorGeometry = new BoxGeometry(0.3, 0.5, 0.1);
+    const doorGeometry = new BoxGeometry(0.3, 0.5, 0.075);
     doorGeometry.applyMatrix4(new Matrix4().makeTranslation(-0.15, -0.1, -0.5));
 
-    var mergeGeometry = new Geometry();
-    mergeGeometry.merge(window.geometry);
-    mergeGeometry.merge(doorGeometry);
-    // mergeGeometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
+    var mergeGeometry = BufferGeometryUtils.mergeGeometries([
+      window.geometry,
+      doorGeometry,
+    ]);
+    // mergeGeometry.applyMatrix4(new Matrix4().makeTranslation(0, 0, 0));
 
     // HOUSE
-    const roomGeometry = new BoxGeometry(1, 0.8, 1);
-    // roomGeometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
-    var box = new Mesh(roomGeometry);
+    const box = new Mesh(new BoxGeometry(1, 0.8, 1));
     // box.position.set( 0, 0.5, 0 );
-    box.updateMatrix();
+    // box.updateMatrix(); // needed?
 
     // var cutgeo = new THREE.BoxGeometry( 0.9, 0.9, 0.9 );
     const cutgeo = box.clone();
-    cutgeo.scale.multiplyScalar(0.9);
+    cutgeo.scale.multiplyScalar(0.925);
     cutgeo.updateMatrix();
 
     // cut inner box
@@ -160,58 +165,62 @@ export default class House {
     // houseMesh.geometry.computeVertexNormals();
     // var material = new THREE.MeshLambertMaterial({wireframe:true})
     // mesh.material = material;
-    // houseMesh.material.flatShading = false;
+    // houseMesh.material.flatShading = true;
     houseMesh.position.set(0, 0.4, 0);
+    houseMesh.layers.enable(1);
+
     house.add(houseMesh);
 
     house.traverse(function (object) {
       object.castShadow = true;
-      // object.receiveShadow = true;
-      // object.receiveShadow = true;
+      // disable self-shadow from roof on house
+      object.receiveShadow = false;
     });
 
     // DOOR
-    doorGeometry.center();
-    // SHIFT GEOMETRY SO THE CENTROID ( ROTATION AXIS ) IS ON THE EDGE
-    doorGeometry.applyMatrix4(new Matrix4().makeTranslation(0.2, 0, 0));
+
+    const doorGeometry2 = new BoxGeometry(0.3, 0.5, 0.025);
+    // doorGeometry2.applyMatrix4(
+    //   new Matrix4().makeTranslation(-0.55, -0.1, 1.75)
+    // );
 
     const woodMaterial = material.clone();
-    woodMaterial.color.setHex(0x876a14);
+    woodMaterial.color.setHex(0xa78a34);
 
     const reflectiveMaterial = material.clone();
     reflectiveMaterial.color.setHex(0xffffff);
     reflectiveMaterial.envMap = textureCube;
     reflectiveMaterial.reflectivity = 0.8;
 
-    const doorMaterial = [
-      woodMaterial,
-      woodMaterial,
-      woodMaterial,
-      woodMaterial,
-      woodMaterial,
-      woodMaterial,
-      reflectiveMaterial,
-      reflectiveMaterial,
-      reflectiveMaterial,
-    ];
+    const doorMaterial = [woodMaterial, reflectiveMaterial];
 
     // var geometry = new THREE.SphereBufferGeometry( 0.02, 16, 16 );
     const knobGeometry = new CylinderGeometry(0.02, 0.02, 0.01, 16);
     knobGeometry.applyMatrix4(new Matrix4().makeRotationX(Math.PI / 2));
-    knobGeometry.applyMatrix4(new Matrix4().makeTranslation(0.3, 0, -0.05));
-    doorGeometry.merge(knobGeometry, knobGeometry.matrix, 6);
+    knobGeometry.applyMatrix4(new Matrix4().makeTranslation(0.25, 0, -0.005));
 
-    const door = new Mesh(doorGeometry, doorMaterial);
-    door.position.set(-0.35, 0.3, -0.45);
+    doorGeometry2.center();
+    // SHIFT GEOMETRY SO THE CENTROID ( ROTATION AXIS ) IS ON THE EDGE
+    doorGeometry2.applyMatrix4(new Matrix4().makeTranslation(0.15, 0, 0.01));
+
+    const doorFinalGeometry = BufferGeometryUtils.mergeGeometries(
+      [doorGeometry2, knobGeometry],
+      true
+    );
+
+    const door = new Mesh(doorFinalGeometry, doorMaterial);
+    // door.position.set(-0.35, 0.3, -0.45);
+    door.position.set(-0.3, 0.3, -0.49);
     // door.rotation.y = -90 * Math.PI / 180;
     house.add(door);
+
     door.castShadow = true;
     door.userData.interact = function () {
       if (this.rotation.y == 0) {
-        tweenY(this, (-75 * Math.PI) / 180);
+        return tweenY(this, (-75 * Math.PI) / 180);
         // object.rotation.y -= 65 * Math.PI / 180;
       } else {
-        tweenY(this, 0);
+        return tweenY(this, 0);
         // object.rotation.y = 0;
       }
     }.bind(door);
@@ -236,79 +245,79 @@ export default class House {
 
     const postBoxGeometry = new BoxGeometry(0.22, 0.04, 0.08);
     postBoxGeometry.applyMatrix4(new Matrix4().makeTranslation(0, 0.18, 0));
-    postBoxGeometry.merge(postBoxCapGeometry);
+    const newPostBoxGeometry = BufferGeometryUtils.mergeGeometries([
+      postBoxGeometry,
+      postBoxCapGeometry,
+    ]);
 
     const postBoxPoleGeometry = new CylinderGeometry(0.02, 0.02, 0.16);
     postBoxPoleGeometry.applyMatrix4(new Matrix4().makeTranslation(0, 0.08, 0));
 
-    const postGeometry = new Geometry();
-    postGeometry.merge(postBoxPoleGeometry, postBoxPoleGeometry.matrix, 0);
-    postGeometry.merge(postBoxGeometry, postBoxGeometry.matrix, 1);
+    const newPostGeometry = BufferGeometryUtils.mergeGeometries(
+      [postBoxPoleGeometry, newPostBoxGeometry],
+      true
+    );
 
     const poleMaterial = material.clone();
     poleMaterial.color.setHex(0x876a14);
     const boxMaterial = material.clone();
-    boxMaterial.color.setHex(0x5b0202);
+    boxMaterial.color.setHex(0x6b1212);
 
-    const postMaterial = [
-      poleMaterial,
-      boxMaterial,
-      boxMaterial,
-      boxMaterial,
-      boxMaterial,
-      boxMaterial,
-      boxMaterial,
-    ];
-    const post = new Mesh(postGeometry, postMaterial);
+    const postMaterial = [poleMaterial, boxMaterial];
+
+    const post = new Mesh(newPostGeometry, postMaterial);
     post.position.set(0.3, 0, -1);
     post.castShadow = true;
     scene.add(post);
     post.userData.interact = function () {
       if (this.rotation.y == 0) {
-        tweenY(this, (-360 * Math.PI) / 180);
+        return tweenY(this, (-360 * Math.PI) / 180);
         // object.rotation.y -= 65 * Math.PI / 180;
       } else {
-        tweenY(this, 0);
+        return tweenY(this, 0);
         // object.rotation.y = 0;
       }
     }.bind(post);
 
     interactionObjects.push(post);
 
-    const roadGeometry = new BoxGeometry(10, 0.01, 1);
-    const stripGeometry = new BoxGeometry(0.7, 0.01, 0.1);
-
-    const total = 6;
-    for (let i = 0; i < total; i++) {
-      const ht = total / 2;
-      const clone = stripGeometry.clone();
-      // clone.applyMatrix4( new Matrix4().makeTranslation( i * 1.7 - ht - 1, 0.01, 0 ) );
-      const matrix = new Matrix4().makeTranslation(i * 1.7 - ht - 1, 0.01, 0);
-      roadGeometry.merge(clone, matrix, 6);
-    }
+    const roadGeometry = new BoxGeometry(10.05, 0.11, 1.5);
+    roadGeometry.applyMatrix4(new Matrix4().makeTranslation(0, -0.05, 0));
+    const stripGeometry = new BoxGeometry(0.9, 0.005, 0.1);
+    // stripGeometry.addGroup(0, 1, 0); // not needed idk
 
     const asphaltMaterial = basicMaterial.clone();
-    asphaltMaterial.color.setHex(0xa1aeb3);
+    asphaltMaterial.color.setHex(0xc1cad0);
+    // asphaltMaterial.wireframe = true;
     const stripMaterial = basicMaterial.clone();
-    stripMaterial.color.setHex(0xdae0e6);
+    // stripMaterial.wireframe = true;
+    stripMaterial.color.setHex(0xeaf0f6);
 
-    const roadMaterial = [
-      asphaltMaterial,
-      asphaltMaterial,
-      asphaltMaterial,
-      asphaltMaterial,
-      asphaltMaterial,
-      asphaltMaterial,
-      stripMaterial,
-      stripMaterial,
-      stripMaterial,
-      stripMaterial,
-      stripMaterial,
-      stripMaterial,
-    ];
+    const streetMaterial = [asphaltMaterial, stripMaterial];
 
-    const road = new Mesh(roadGeometry, roadMaterial);
-    scene.add(road);
-    road.position.set(0, 0, -2.5);
+    let streetGeometry = [roadGeometry];
+    const total = 6;
+    for (let i = 0; i < total; i++) {
+      const clone = stripGeometry.clone();
+      clone.applyMatrix4(
+        new Matrix4().makeTranslation(i * 1.7 - total / 2 - 1, 0.005, 0)
+      );
+      // add each strip geometry into the array
+      streetGeometry.push(clone);
+      //add a material for each geometry into the array
+      streetMaterial.push(stripMaterial);
+    }
+    streetGeometry = BufferGeometryUtils.mergeGeometries(streetGeometry, true);
+
+    const streetMesh = new Mesh(streetGeometry, streetMaterial);
+    streetMesh.position.set(0, 0, -2.5);
+    scene.add(streetMesh);
+    // this.update = function (delta) {
+    //   //   console.log("hello from", door);
+    // };
+
+    interactionObjects.forEach((o) => {
+      o.layers.enable(1);
+    });
   }
 }

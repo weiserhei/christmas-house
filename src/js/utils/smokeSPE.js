@@ -1,7 +1,7 @@
 import { TextureLoader, NormalBlending, Vector3, Color } from "three";
 import SPE from "shader-particle-engine";
 
-import cloud from "../../img/cloudSml.png";
+import cloud from "../../assets/img/cloudSml.png";
 // import soundSteam from "../../media/steam.ogg";
 
 export default class Particles {

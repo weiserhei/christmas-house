@@ -1,13 +1,14 @@
 /* global THREE */
-
-var THREEx = THREEx || {};
+import * as THREE from "three";
+import { Color, ShaderMaterial, BackSide } from "three";
 
 /**
  * from http://stemkoski.blogspot.fr/2013/07/shaders-in-threejs-glow-and-halo.html
  * @return {[type]} [description]
  */
 
-THREEx.skyDomeShaderMaterial = function () {
+let skyDomeShaderMaterial = function () {
+  // export function skyDomeShaderMaterial() {
   var vertexShader = [
     "varying vec3 vWorldPosition;",
 
@@ -39,8 +40,8 @@ THREEx.skyDomeShaderMaterial = function () {
 
   var uniforms = {
     //topColor: 	 { type: "c", value: new THREE.Color( 0x0077ff ) },
-    topColor: { type: "c", value: new THREE.Color(0x00004d) },
-    bottomColor: { type: "c", value: new THREE.Color(0xeeeeee) },
+    topColor: { type: "c", value: new Color(0x00009d) },
+    bottomColor: { type: "c", value: new Color(0xfafafa) },
     offset: { type: "f", value: 5 },
     exponent: { type: "f", value: 0.6 },
   };
@@ -49,12 +50,14 @@ THREEx.skyDomeShaderMaterial = function () {
 
   // create custom material from the shader code above
   //   that is within specially labeled script tags
-  var material = new THREE.ShaderMaterial({
+  var material = new ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
     uniforms: uniforms,
-    side: THREE.BackSide,
+    side: BackSide,
   });
 
   return material;
 };
+
+export { skyDomeShaderMaterial };

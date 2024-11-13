@@ -4,7 +4,10 @@ export default class InteractionController {
   constructor(scene, camera, container) {
     const mouseVector = new Vector2();
     const raycaster = new Raycaster();
+    const tweens = [];
 
+    // ignore particles when raycasting
+    raycaster.layers.set(1);
     window.addEventListener("touchstart", touchstart, true);
     window.addEventListener("mousemove", onMouseMove, false);
     window.addEventListener("pointerdown", onMouseDown, false);
@@ -43,7 +46,7 @@ export default class InteractionController {
         intersects.length > 0 &&
         intersects[0].object.userData.interact != undefined
       ) {
-        intersects[0].object.userData.interact();
+        tweens.push(intersects[0].object.userData.interact());
       }
     }
 
@@ -58,5 +61,11 @@ export default class InteractionController {
       // return raycaster.intersectObjects( interactionObjects, true );
       return raycaster.intersectObjects(scene.children, true);
     }
+
+    this.update = function (delta) {
+      tweens.forEach((tween) => {
+        tween.update();
+      });
+    };
   }
 }

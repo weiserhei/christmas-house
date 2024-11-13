@@ -21,9 +21,9 @@ export default class Camera {
 
   updateSize(renderer) {
     // Multiply by dpr in case it is retina device
-    // const width = renderer.domElement.width * Config.dpr;
-    // const height = renderer.domElement.height * Config.dpr;
-    // this.threeCamera.aspect =  width / height;
+    // const width = renderer.domElement.width * 1;
+    // const height = renderer.domElement.height * 1;
+    // this.threeCamera.aspect = width / height;
     this.threeCamera.aspect =
       renderer.domElement.width / renderer.domElement.height;
 

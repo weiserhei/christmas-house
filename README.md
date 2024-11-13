@@ -5,7 +5,8 @@
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/weiserhei/christmas-house?style=flat-square)
 
-# Christmas House (2015)(updated 2019)
+# Christmas House (2015)(updated 2024)
+
 My first three.js christmas experiment.
 
 ## Demo
@@ -13,6 +14,12 @@ My first three.js christmas experiment.
 [![demo](/ogimage.jpg)](http://weiserhei.github.io/christmas-house/)
 
 http://weiserhei.github.io/christmas-house/
+
+## Changes
+
+- build with vite instead of webpack
+- remove ShaderParticleEngine
+- new three.js-sky
 
 ### Quickstart
 

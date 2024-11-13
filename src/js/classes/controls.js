@@ -7,7 +7,6 @@ export default class Controls {
     this.threeControls = controls;
     this.camera = camera;
 
-    controls.target.set(0, 0, 0);
     controls.enableDamping = true;
     controls.rotateSpeed = 0.25;
     controls.dampingFactor = 0.1;
